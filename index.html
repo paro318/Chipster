@@ -61,7 +61,7 @@
         overflow: hidden;
       }
 
-      .menu-icon {
+        .menu-icon {
         display: none;
         font-size: 1.5rem;
         cursor: pointer;
@@ -499,32 +499,28 @@
       }
 
       @media (max-width: 768px) {
+        /* Header styles */
         header {
           flex-direction: column;
-          gap: 1rem;
           align-items: center;
           padding: 10px;
-          border: 2px solid red;
         }
-        .modal {
-          display: hidden;
-        }
+
         .logo {
           margin-bottom: 10px;
-          border: 3px solid #fff;
-          width: 100%;
-          text-align: center;
-          height: fit-content;
         }
 
         nav ul {
+          display: flex;
+          flex-direction: row;
           justify-content: center;
+          gap: 15px;
+          margin-top: 10px;
         }
 
         .menu-icon {
-          display: hidden;
+          display: none;
         }
-
 
         /* Hero section styles */
         .hero-section {
@@ -815,7 +811,47 @@
     </footer>
 
     <script>
-    
+      // Toggle mobile menu
+      function toggleMenu() {
+        const modal = document.getElementById('menuModal');
+        modal.style.display = 'block';
+        setTimeout(() => {
+          modal.classList.add('show');
+        }, 10);
+      }
+
+      // Close mobile menu
+      function closeModal() {
+        const modal = document.getElementById('menuModal');
+        modal.classList.remove('show');
+        setTimeout(() => {
+          modal.style.display = 'none';
+        }, 300);
+      }
+
+      // Handle scroll events
+      function handleScroll() {
+        const header = document.getElementById('header');
+        const scrollPosition = window.scrollY;
+        const menuIcon = document.querySelector('.menu-icon');
+
+        // Header animation
+        if (scrollPosition > 50) {
+          header.style.backgroundColor = 'rgba(31, 31, 31, 0.9)';
+          header.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
+          if (window.innerWidth <= 768) {
+            // menuIcon.style.display = 'flex';
+            // header.querySelector('nav ul').style.display = 'none';
+          }
+        } else {
+          header.style.backgroundColor = '#1f1f1f';
+          header.style.boxShadow = 'none';
+          if (window.innerWidth > 768) {
+            // menuIcon.style.display = 'none';
+            // header.querySelector('nav ul').style.display = 'flex';
+          }
+        }
+
         // Ticker items animation
         const tickerItems = document.querySelectorAll('.ticker-item');
         tickerItems.forEach((item, index) => {
@@ -838,7 +874,10 @@
         });
       }
 
-    
+      // Event listeners
+      window.addEventListener('scroll', handleScroll);
+      window.addEventListener('resize', handleScroll);
+      handleScroll(); // Initial check on page load
 
       // Hero images hover effect
       const heroImages = document.querySelectorAll('.hero-image');
